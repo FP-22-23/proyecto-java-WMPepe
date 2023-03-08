@@ -11,7 +11,7 @@ Autor/a: José Coronil   uvus:FKR9503
 * **/data**: Contiene el dataset del proyecto.
     * **urban_dictionary.csv**: Archivo csv que contiene datos de definiciones de Urban Dictionary.
     
-## Estructura del *dataset*E
+## Estructura del *dataset*
 * **Word**: de tipo string. Palabra o concepto que se va a definir.
 * **Definition**: de tipo string. Definicion de la palabra.
 * **Author**: de tipo string. Autor de la definicion.
