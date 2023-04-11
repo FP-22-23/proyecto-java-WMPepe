@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author PokeH
+ *
+ */
+module UrbanDirctionary {
+}
