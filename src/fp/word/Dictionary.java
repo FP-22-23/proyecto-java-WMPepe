@@ -1,12 +1,20 @@
 package fp.word;
 
+import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Dictionary implements Collection<Word> {
 
@@ -22,6 +30,11 @@ public class Dictionary implements Collection<Word> {
 	public Dictionary(Collection<? extends Word> list)
 	{
 		this.words = new LinkedList<Word>(list);
+	}
+
+	public Dictionary(Stream<Word> stream)
+	{
+		this.words = stream.collect(Collectors.toList());
 	}
 
 	public List<Word> getWords() {
@@ -124,6 +137,74 @@ public class Dictionary implements Collection<Word> {
 			}
 		return res;
 		}
+		
+		
+		
+		
+		//Entrega 3 bloque I
+		public boolean existeStream(Word word)
+		{
+			
+			return this.words.stream().anyMatch(x -> x.equals(word));
+		}	
+		public Integer sumaStream()
+		{
+			return this.words.stream().collect(Collectors.summingInt(x -> x.getVotes().upMinusDown()));
+		}
+		public Dictionary filtrarPorVotosMayorAStream(int a)
+		{
+			return new Dictionary(this.words.stream().filter(x -> x.getVotes().upMinusDown() >= a));
+		}
+		public Word maximoVotosAntesDe(LocalDate date)
+		{
+			return this.words.stream().filter(x-> x.getDate().isBefore(date)).max(Comparator.naturalOrder()).orElseGet(null);
+		}
+		
+		public Dictionary filtradoPorVotosYOrdenado(int a)
+		{
+			return new Dictionary(this.words.stream().filter(x -> x.getVotes().upMinusDown() > a ).sorted(Comparator.naturalOrder()));
+		}
+		
+		//Entrega 3 Bloque II
+		public Map<String, List<Word>> agruparPorAutor()
+		{
+			return this.words.stream().collect(Collectors.groupingBy(Word::getAuthor));
+		}
+		
+		public List<Word> listaInmodificable()
+		{
+			return this.words.stream().collect(Collectors.collectingAndThen( Collectors.toList(), Collections::unmodifiableList));
+		}
+		
+		public Map<String, Integer> mejorNotaPorAutor()
+		{
+			return this.words.stream().collect(Collectors.toMap(Word::getAuthor
+					, x->x.getVotes().upMinusDown(),
+					BinaryOperator.maxBy(Comparator.naturalOrder())));
+		}
+		
+		public SortedMap<LocalDate, List<Word>> topNPalabrasCadaDia(int n)
+		{
+			return this.words.stream().collect(Collectors.groupingBy(Word::getDate,
+					TreeMap::new,
+					Collectors.collectingAndThen(Collectors.toList(),
+					x->x.stream().sorted().limit(n).toList())));
+		
+		}
+		
+		public String usuarioConMásPalabras()
+		{
+			Map<String, Long> strm = this.words.stream().collect(Collectors.groupingBy
+					(Word::getAuthor, Collectors.counting()));
+			
+			return strm.entrySet().stream()
+					.max(
+					(entry1, entry2) -> entry1.getValue() > entry2.getValue() 
+					? 1 : -1)
+					.get().getKey();
+		}
+		
+		
 		
 		
 		

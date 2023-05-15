@@ -34,6 +34,25 @@ public class DictionaryFactory {
 		
 		return res;
 	}
+	
+	public static Dictionary readWordsConstructFromStream(String path)
+	{
+		Dictionary res  = null;
+		try
+		{
+			Stream<Word> words= 
+				Files.lines(Paths.get(path)).
+				skip(1).
+				map(DictionaryFactory::parseWord);
+			
+		 res = new Dictionary(words);
+		}
+		catch(IOException e)
+		{System.out.println("No se encontró el fichero");
+		e.printStackTrace();}
+		
+		return res;
+	}
 	public static Word parseWord(String lineaCSV)
 	{
 		

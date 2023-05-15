@@ -13,7 +13,8 @@ public class WordTest {
 	
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		System.out.println("Entrega 1");
 		Word word = new Word("Reloj", "Elemento que da la hora", "Manolo",new LinkedList<String>(), new Votes(50,6), LocalDate.now());
 		Word word2 = new Word("Panadero", "Persona que hace pan", "Gerardo",new LinkedList<String>(), new Votes(5,66), LocalDate.now());
 		
@@ -30,6 +31,7 @@ public class WordTest {
 		System.out.println(word.compareTo(word2));
 		System.out.println(word.equals(word2));
 		
+		System.out.println("Entrega 2");
 		Dictionary dict2 = DictionaryFactory.readWords("C:/Users/PokeH/git/UrbanDirctionary/data/urban_dictionary_UP.csv");
 		System.out.println(dict2);
 		System.out.println(dict2.size());
@@ -41,6 +43,18 @@ public class WordTest {
 		System.out.println(dict2.filtrarPorVotosMayor(0));
 		System.out.println(dict2.agruparPorTags());
 		System.out.println(dict2.sumaVotosPorTag());
+		
+		System.out.println("Entrega 3");
+		System.out.println(dict2.existeStream(word));
+		System.out.println(dict2.sumaStream());
+		System.out.println(dict2.filtrarPorVotosMayorAStream(0));
+		System.out.println(dict2.maximoVotosAntesDe(LocalDate.now()));
+		System.out.println(dict2.filtradoPorVotosYOrdenado(0));
+		System.out.println(dict2.agruparPorAutor());
+		System.out.println(dict2.listaInmodificable());
+		System.out.println(dict2.mejorNotaPorAutor());
+		System.out.println(dict2.topNPalabrasCadaDia(3));
+		System.out.println(dict2.usuarioConMásPalabras());
 
 		
 		
